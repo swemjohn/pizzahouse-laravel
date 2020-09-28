@@ -25,18 +25,19 @@ class PizzaController extends Controller
     public function create(){
         return view('pizzas.create');
     }
-    public function store(){
-        
+    public function store(Request $request){
+        if ($request->isMethod('post')){
         $pizza = new Pizza();
-        $pizza->name = request('name');
-        $pizza->type = request('type');
-        $pizza->base = request('base');
-        $pizza->toppings = request('toppings');
+        $pizza->name = $request->name;
+        $pizza->type = $request->type;
+        $pizza->base = $request->base;
+        $pizza->toppings = $request->toppings;
         //  error_log($pizza);
         $pizza->save();
         
         return redirect('/')->with('msg', 'Thanks for your order');
     }
+}
 
     public function destroy($id){
         $pizza = Pizza::findorfail($id);
